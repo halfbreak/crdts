@@ -15,8 +15,8 @@ class GCounter(private val myId: String,
         return counts.values.stream().reduce(0L) { a, b -> a!! + b!! }
     }
 
-    fun compare(other: ConcurrentMap<String, Long>): Boolean {
-        return counts.entries.all { entry -> entry.value <= other.getOrZero(entry.key) }
+    fun compare(other: GCounter): Boolean {
+        return counts.entries.all { entry -> entry.value <= other.counts.getOrZero(entry.key) }
     }
 
     fun merge(other: GCounter): GCounter {
