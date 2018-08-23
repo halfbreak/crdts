@@ -12,7 +12,7 @@ class GCounter(private val myId: String,
     }
 
     fun value(): Long {
-        return counts.values.stream().reduce(0L) { a, b -> a!! + b!! }
+        return counts.values.fold(0L) { a, b -> a + b!! }
     }
 
     fun compare(other: GCounter): Boolean {
