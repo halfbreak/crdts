@@ -24,11 +24,12 @@ class GSet(private val myId: String,
         return GSet(myId, adds.plus(other.adds).toMutableSet())
     }
 
-    fun serialize(): Crdts.GSet {
+    fun serialize(): ByteArray {
         return Crdts.GSet
                 .newBuilder()
                 .setSenderId(myId)
                 .addAllAdds(adds)
                 .build()
+                .toByteArray()
     }
 }

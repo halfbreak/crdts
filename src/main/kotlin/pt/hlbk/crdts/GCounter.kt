@@ -25,12 +25,13 @@ class GCounter(private val myId: String,
                 counts.apply { other.counts.forEach { merge(it.key, it.value) { a, b -> Math.max(a, b) } } })
     }
 
-    fun serialize(): Crdts.GCounter {
+    fun serialize(): ByteArray {
         return Crdts.GCounter
                 .newBuilder()
                 .setSenderId(myId)
                 .putAllIncreases(counts)
                 .build()
+                .toByteArray()
     }
 
     fun getCounts(): ConcurrentMap<String, Long> {

@@ -26,12 +26,13 @@ class PNCounter(private val myId: String,
         return PNCounter(myId, increases.merge(other.increases), decreases.merge(other.decreases))
     }
 
-    fun serialize(): Crdts.PNCounter {
+    fun serialize(): ByteArray {
         return Crdts.PNCounter
                 .newBuilder()
                 .setSenderId(myId)
                 .putAllIncreases(increases.getCounts())
                 .putAllDecreases(decreases.getCounts())
                 .build()
+                .toByteArray()
     }
 }
