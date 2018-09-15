@@ -1,5 +1,7 @@
 package pt.hlbk.crdts
 
+import pt.hlbk.crdts.protobuf.Crdts
+
 class PNCounter(private val myId: String,
                 private val increases: GCounter = GCounter(myId),
                 private val decreases: GCounter = GCounter(myId)) {
@@ -22,5 +24,14 @@ class PNCounter(private val myId: String,
 
     fun merge(other: PNCounter): PNCounter {
         return PNCounter(myId, increases.merge(other.increases), decreases.merge(other.decreases))
+    }
+
+    fun serialize(): Crdts.PNCounter {
+        return Crdts.PNCounter
+                .newBuilder()
+                .setSenderId(myId)
+                .putAllIncreases(increases.getCounts())
+                .putAllDecreases(decreases.getCounts())
+                .build()
     }
 }

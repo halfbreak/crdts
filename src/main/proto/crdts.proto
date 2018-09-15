@@ -1,0 +1,19 @@
+package protobuf;
+
+option java_package = "pt.hlbk.crdts.protobuf";
+
+message GCounter {
+    required string senderId = 1;
+    map<string, int64> increases = 2;
+}
+
+message PNCounter {
+    required string senderId = 1;
+    map<string, int64> increases = 2;
+    map<string, int64> decreases = 3;
+}
+
+message GSet {
+    required string senderId = 1;
+    repeated string adds = 2;
+}

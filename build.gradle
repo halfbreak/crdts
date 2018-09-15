@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'org.jetbrains.kotlin.jvm' version '1.2.60'
+    id 'com.google.protobuf' version '0.8.6'
 }
 
 group 'pt.hlbk'
@@ -14,6 +15,8 @@ repositories {
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    compile "com.google.protobuf:protobuf-java:3.6.1"
+
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.1.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.1.0'
     testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.10.0'
@@ -28,4 +31,12 @@ compileTestKotlin {
 
 test {
     useJUnitPlatform()
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir "$buildDir/generated/source/proto/main/java"
+        }
+    }
 }

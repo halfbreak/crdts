@@ -1,5 +1,6 @@
 package pt.hlbk.crdts
 
+import pt.hlbk.crdts.protobuf.Crdts
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
 
@@ -12,7 +13,7 @@ class GCounter(private val myId: String,
     }
 
     fun value(): Long {
-        return counts.values.fold(0L) { a, b -> a + b!! }
+        return counts.values.fold(0L) { a, b -> a + b }
     }
 
     fun compare(other: GCounter): Boolean {
@@ -22,6 +23,18 @@ class GCounter(private val myId: String,
     fun merge(other: GCounter): GCounter {
         return GCounter(myId,
                 counts.apply { other.counts.forEach { merge(it.key, it.value) { a, b -> Math.max(a, b) } } })
+    }
+
+    fun serialize(): Crdts.GCounter {
+        return Crdts.GCounter
+                .newBuilder()
+                .setSenderId(myId)
+                .putAllIncreases(counts)
+                .build()
+    }
+
+    fun getCounts(): ConcurrentMap<String, Long> {
+        return ConcurrentHashMap<String, Long>(counts)
     }
 }
 
